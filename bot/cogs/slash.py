@@ -12,9 +12,8 @@ class Slash(Cog_Extension):
     @app_commands.command(name="register", description="Зарегистрируйтесь в SkillCraft Studio")
     async def register_user(self, interaction: discord.Interaction, api_key: str, prompt_name: str = None):
         user = interaction.user.name
-        message = (
-            f'Пользователь {user} использовал команду `/register` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
-        channel_id = 000000000000
+        message = (f'Пользователь {user} использовал команду `/register` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
+        channel_id = #ID канала
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
         user_id = str(interaction.user.id).split("#")[0]
@@ -32,8 +31,7 @@ class Slash(Cog_Extension):
                 return
 
         if not api_key.startswith("sk-") or len(api_key) > 75:
-            await interaction.response.send_message(
-                "Ошибка: Некорректный токен. Вы также можете купить токен, воспользовавшись командой `/buy-key`")
+            await interaction.response.send_message("Ошибка: Некорректный токен. Вы также можете купить токен, воспользовавшись командой `/buy-key`", ephemeral=True)
             return
 
         registration_date = datetime.now().strftime("%d %B %Y г.")
@@ -49,16 +47,13 @@ class Slash(Cog_Extension):
         open(temporary_prompt_file_path, 'w').close()
         open(prompt_file_path, 'w').close()
 
-        await interaction.response.send_message(
-            "Вы успешно зарегистрировались. Рекомендуем ознакомится с [документацией](https://docs.kazetech.ru/skillcraft-studio/rabota-s-skillcraft-studio) перед работой с SkillCraft Studio",
-            ephemeral=True)
+        await interaction.response.send_message("Вы успешно зарегистрировались. Рекомендуем ознакомится с [документацией](https://docs.kazetech.ru/skillcraft-studio/rabota-s-skillcraft-studio) перед работой с SkillCraft Studio", ephemeral=True)
 
     @app_commands.command(name="new-prompt", description="Создает новый промпт")
     async def new_prompt(self, interaction: discord.Interaction, name: str, text: str = ""):
         user = interaction.user.name
-        message = (
-            f'Пользователь {user} использовал команду `/new-prompt` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
-        channel_id = 000000000000
+        message = (f'Пользователь {user} использовал команду `/new-prompt` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
+        channel_id = #ID канала
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
         user_id = str(interaction.user.id)
@@ -90,9 +85,8 @@ class Slash(Cog_Extension):
     async def activate_key(self, interaction: discord.Interaction, code: str, apply: str):
         await interaction.response.defer()
         user = interaction.user.name
-        message = (
-            f'Пользователь {user} использовал команду `/activate-key` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
-        channel_id = 000000000000
+        message = (f'Пользователь {user} использовал команду `/activate-key` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
+        channel_id = #ID канала
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
 
@@ -115,22 +109,17 @@ class Slash(Cog_Extension):
                         found = True
                         if apply == "YES":
                             if not os.path.exists(user_folder):
-                                await interaction.followup.send(
-                                    "Вы еще не зарегистрировались в SkillCraft Studio. Чтобы это сделать, воспользуйтесь командой </register:1131239719263547502>")
+                                await interaction.followup.send("Вы еще не зарегистрировались в SkillCraft Studio. Чтобы это сделать, воспользуйтесь командой </register:1131239719263547502>")
                                 return
 
                             selected_key = random.choice(keys).strip()
                             with open(key_path, "w") as key_file:
                                 key_file.write(selected_key)
-                            embed = discord.Embed(title="Покупка OpenAI API ключа",
-                                                  description=f"Покупка успешно завершена.\nВаш API ключ: **{selected_key}**\nКлюч был автоматически заменен.",
-                                                  color=0x00ff00)
+                            embed = discord.Embed(title="Покупка OpenAI API ключа", description=f"Покупка успешно завершена.\nВаш API ключ: **{selected_key}**\nКлюч был автоматически заменен.", color=0x00ff00)
                             await interaction.followup.send(embed=embed)
                         elif apply == "NO":
                             selected_key = open(key_path).read().strip()
-                            embed = discord.Embed(title="Покупка OpenAI API ключа",
-                                                  description=f"Покупка успешно завершена.\nВаш API ключ: **{selected_key}**",
-                                                  color=0x00ff00)
+                            embed = discord.Embed(title="Покупка OpenAI API ключа", description=f"Покупка успешно завершена.\nВаш API ключ: **{selected_key}**", color=0x00ff00)
                             await interaction.followup.send(embed=embed)
                 else:
                     codes_file.write(line)
@@ -145,9 +134,8 @@ class Slash(Cog_Extension):
     @app_commands.command(name="edit-prompt", description="Редактирует промпт")
     async def edit_prompt(self, interaction: discord.Interaction, prompt_name: str, new_name: str = "", text: str = ""):
         user = interaction.user.name
-        message = (
-            f'Пользователь {user} использовал команду `/edit-prompt` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
-        channel_id = 000000000000
+        message = (f'Пользователь {user} использовал команду `/edit-prompt` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
+        channel_id = #ID канала
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
         user_id = str(interaction.user.id)
@@ -157,8 +145,7 @@ class Slash(Cog_Extension):
         with open('users.txt', 'r') as f:
             register = [line.strip().split('#')[0] for line in f]
         if str(interaction.user.id) not in register:
-            await interaction.response.send_message(
-                "Вы еще не зарегистрировались в SkillCraft Studio. Чтобы это сделать, воспользуйтесь командой </register:1131239719263547502>")
+            await interaction.response.send_message("Вы еще не зарегистрировались в SkillCraft Studio. Чтобы это сделать, воспользуйтесь командой </register:1131239719263547502>")
             return
 
         if not os.path.exists(file_path):
@@ -166,8 +153,7 @@ class Slash(Cog_Extension):
             return
 
         if not new_name and not text:
-            await interaction.response.send_message(
-                "Ошибка: Для изменения промпта необходимо заполнить хотя бы одно редакционное поле.")
+            await interaction.response.send_message("Ошибка: Для изменения промпта необходимо заполнить хотя бы одно редакционное поле.")
             return
 
         if new_name:
@@ -189,9 +175,8 @@ class Slash(Cog_Extension):
     @app_commands.command(name="prompts-list", description="Выводит список промптов")
     async def prompts_list(self, interaction: discord.Interaction):
         user = interaction.user.name
-        message = (
-            f'Пользователь {user} использовал команду `/prompt-list` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
-        channel_id = 000000000000
+        message = (f'Пользователь {user} использовал команду `/prompt-list` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
+        channel_id = #ID канала
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
         user_id = str(interaction.user.id)
@@ -200,8 +185,7 @@ class Slash(Cog_Extension):
         with open('users.txt', 'r') as f:
             register = [line.strip().split('#')[0] for line in f]
         if str(interaction.user.id) not in register:
-            await interaction.response.send_message(
-                "Вы еще не зарегистрировались в SkillCraft Studio. Чтобы это сделать, воспользуйтесь командой </register:1131239719263547502>")
+            await interaction.response.send_message("Вы еще не зарегистрировались в SkillCraft Studio. Чтобы это сделать, воспользуйтесь командой </register:{command_id}>")
             return
 
         if not os.path.exists(user_folder_path):
@@ -222,9 +206,8 @@ class Slash(Cog_Extension):
     @app_commands.command(name="delete-prompt", description="Удаляет промпт")
     async def delete_prompt(self, interaction: discord.Interaction, prompt_name: str):
         user = interaction.user.name
-        message = (
-            f'Пользователь {user} использовал команду `/delete-prompt` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
-        channel_id = 000000000000
+        message = (f'Пользователь {user} использовал команду `/delete-prompt` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
+        channel_id = #ID канала
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
         user_id = str(interaction.user.id)
@@ -248,9 +231,8 @@ class Slash(Cog_Extension):
     @app_commands.command(name="change-key", description="Изменяет API-ключ")
     async def change_key(self, interaction: discord.Interaction, new_key: str):
         user = interaction.user.name
-        message = (
-            f'Пользователь {user} использовал команду `/change-key` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
-        channel_id = 000000000000
+        message = (f'Пользователь {user} использовал команду `/change-key` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
+        channel_id = #ID канала
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
         user_id = str(interaction.user.id)
@@ -283,7 +265,7 @@ class Slash(Cog_Extension):
         user = interaction.user.name
         message = (
             f'Пользователь {user} использовал команду `/show-prompt` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
-        channel_id = 000000000000
+        channel_id = #ID канала
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
         user_id = str(interaction.user.id)
@@ -293,8 +275,7 @@ class Slash(Cog_Extension):
         with open('users.txt', 'r') as f:
             register = [line.strip().split('#')[0] for line in f]
         if str(interaction.user.id) not in register:
-            await interaction.response.send_message(
-                "Вы еще не зарегистрировались в SkillCraft Studio. Чтобы это сделать, воспользуйтесь командой </register:1131239719263547502>")
+            await interaction.response.send_message("Вы еще не зарегистрировались в SkillCraft Studio. Чтобы это сделать, воспользуйтесь командой </register:1131239719263547502>")
             return
 
         if not os.path.exists(file_path):
@@ -315,9 +296,8 @@ class Slash(Cog_Extension):
     @app_commands.command(name="test-prompt", description="Запускает исполнение промпта")
     async def test_prompt(self, interaction: discord.Interaction, prompt_name: str):
         user = interaction.user.name
-        message = (
-            f'Пользователь {user} использовал команду `/test-prompt` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
-        channel_id = 000000000000
+        message = (f'Пользователь {user} использовал команду `/test-prompt` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
+        channel_id = #ID канала
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
         user_id = str(interaction.user.id)
@@ -328,8 +308,7 @@ class Slash(Cog_Extension):
         with open('users.txt', 'r') as f:
             register = [line.strip().split('#')[0] for line in f]
         if str(interaction.user.id) not in register:
-            await interaction.response.send_message(
-                "Вы еще не зарегистрировались в SkillCraft Studio. Чтобы это сделать, воспользуйтесь командой </register:1131239719263547502>")
+            await interaction.response.send_message("Вы еще не зарегистрировались в SkillCraft Studio. Чтобы это сделать, воспользуйтесь командой </register:1131239719263547502>")
             return
 
         if not os.path.exists(prompt_file_path):
@@ -351,9 +330,8 @@ class Slash(Cog_Extension):
     @app_commands.command(name="test-chat", description="Чат с промптом")
     async def test_chat(self, interaction: discord.Interaction, message: str):
         user = interaction.user.name
-        message = (
-            f'Пользователь {user} использовал команду `/test-chat` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
-        channel_id = 000000000000
+        message = (f'Пользователь {user} использовал команду `/test-chat` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
+        channel_id = #ID канала
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
         user_id = str(interaction.user.id)
@@ -366,8 +344,7 @@ class Slash(Cog_Extension):
         with open('users.txt', 'r') as f:
             register = [line.strip().split('#')[0] for line in f]
         if str(interaction.user.id) not in register:
-            await interaction.response.send_message(
-                "Вы еще не зарегистрировались в SkillCraft Studio. Чтобы это сделать, воспользуйтесь командой </register:1131239719263547502>")
+            await interaction.response.send_message("Вы еще не зарегистрировались в SkillCraft Studio. Чтобы это сделать, воспользуйтесь командой </register:1131239719263547502>")
             return
 
         if not os.path.exists(openai_folder_path):
@@ -415,15 +392,13 @@ class Slash(Cog_Extension):
 
             await interaction.followup.send(respone)
         except Exception as e:
-            await interaction.followup.send(
-                f"При обработке запроса в чат произошла ошибка. Скорее всего из за отсутствия токенов. Купить новый API ключ помжно по команде `/buy-key`.")
+            await interaction.followup.send(f"При обработке запроса в чат произошла ошибка. Скорее всего из за отсутствия токенов. Купить новый API ключ помжно по команде `/buy-key`.")
 
     @app_commands.command(name="test-stop", description="Остановить тестовый чат")
     async def test_stop(self, interaction: discord.Interaction):
         user = interaction.user.name
-        message = (
-            f'Пользователь {user} использовал команду `/test-stop` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
-        channel_id = 000000000000
+        message = (f'Пользователь {user} использовал команду `/test-stop` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
+        channel_id = #ID канала
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
         user_id = str(interaction.user.id)
@@ -434,8 +409,7 @@ class Slash(Cog_Extension):
         with open('users.txt', 'r') as f:
             register = [line.strip().split('#')[0] for line in f]
         if str(interaction.user.id) not in register:
-            await interaction.response.send_message(
-                "Вы еще не зарегистрировались в SkillCraft Studio. Чтобы это сделать, воспользуйтесь командой </register:1131239719263547502>")
+            await interaction.response.send_message("Вы еще не зарегистрировались в SkillCraft Studio. Чтобы это сделать, воспользуйтесь командой </register:1131239719263547502>")
             return
 
         if not os.path.exists(openai_folder_path):
@@ -456,8 +430,7 @@ class Slash(Cog_Extension):
     @app_commands.command(name="profile", description="Показать профиль пользователя")
     async def show_profile(self, interaction: discord.Interaction):
         user = interaction.user.name
-        message = (
-            f'Пользователь {user} использовал команду `/profile` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
+        message = (f'Пользователь {user} использовал команду `/profile` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
         channel_id = 000000000000
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
@@ -470,8 +443,7 @@ class Slash(Cog_Extension):
         with open('users.txt', 'r') as f:
             register = [line.strip().split('#')[0] for line in f]
         if str(interaction.user.id) not in register:
-            await interaction.response.send_message(
-                "Вы еще не зарегистрировались в SkillCraft Studio. Чтобы это сделать, воспользуйтесь командой </register:1131239719263547502>")
+            await interaction.response.send_message("Вы еще не зарегистрировались в SkillCraft Studio. Чтобы это сделать, воспользуйтесь командой </register:1131239719263547502>")
             return
 
         with open(users_file_path, 'r') as f:
@@ -499,8 +471,7 @@ class Slash(Cog_Extension):
         embed = discord.Embed(title=f"Профиль пользователя: {interaction.user.name}", color=discord.Color.blue())
         embed.set_thumbnail(url=interaction.user.avatar.url)
         embed.add_field(name="Никнейм", value=f"<@{user_id.split('#')[0]}>", inline=False)
-        embed.add_field(name="API ключ", value=f"{api_key}\n> Купите API ключ всего за 20 рублей по команде `/buy-key`",
-                        inline=False)
+        embed.add_field(name="API ключ", value=f"{api_key}\n> Купите API ключ всего за 20 рублей по команде `/buy-key`", inline=False)
         embed.add_field(name="ID пользователя", value=user_id, inline=False)
         embed.add_field(name="Кол-во промптов", value=prompt_count, inline=False)
         embed.add_field(name="Дата регистрации", value=registration_date, inline=False)
@@ -510,24 +481,19 @@ class Slash(Cog_Extension):
     @app_commands.command(name="buy-key", description="Купить API ключ OpenAI")
     async def buy_api_key(self, interaction: discord.Interaction):
         user = interaction.user.name
-        message = (
-            f'Пользователь {user} использовал команду `/buy-key` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
-        channel_id = 000000000000
+        message = (f'Пользователь {user} использовал команду `/buy-key` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
+        channel_id = #ID канала
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
-        embed = discord.Embed(title="Купить API ключ OpenAI",
-                              description="API ключ позволит вам начать использование SkillCraft Studio, а также даст возможность полноценного взаимодействия.",
-                              color=discord.Color.blue())
-        embed.add_field(name="Купить API ключ",
-                        value="[Купить здесь](https://www.donationalerts.com/r/skillcraftstudio)", inline=False)
+        embed = discord.Embed(title="Купить API ключ OpenAI", description="API ключ позволит вам начать использование SkillCraft Studio, а также даст возможность полноценного взаимодействия.", color=discord.Color.blue())
+        embed.add_field(name="Купить API ключ", value="[Купить здесь](https://www.donationalerts.com/r/skillcraftstudio)", inline=False)
         await interaction.response.send_message(embed=embed)
 
     @app_commands.command(name="info", description="Получить информацию о боте")
     async def show_info(self, interaction: discord.Interaction):
         user = interaction.user.name
-        message = (
-            f'Пользователь {user} использовал команду `/info` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
-        channel_id = 000000000000
+        message = (f'Пользователь {user} использовал команду `/info` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
+        channel_id = #ID канала
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
         version = "1.0.00 (release)"
@@ -547,19 +513,15 @@ class Slash(Cog_Extension):
         embed.add_field(name="Кол-во пользователей", value=str(users_count), inline=False)
         embed.add_field(name="Кол-во серверов", value=str(servers_count), inline=False)
         embed.add_field(name="Последнее обновление", value=last_update_date, inline=False)
-        embed.add_field(name="Прочая информация",
-                        value="**[Политика Конфиденциальности](https://example.com/privacy) [Условия использования](https://example.com/terms)\n[Сервер поддержки](https://discord.gg/KKzBPg6jnu) [Документация](https://internet-2.gitbook.io/kaze-docs/skillcraft-studio/rabota-s-skillcraft-studio)**",
-                        inline=False)
+        embed.add_field(name="Прочая информация", value="**[Политика Конфиденциальности](https://example.com/privacy) [Условия использования](https://example.com/terms)\n[Сервер поддержки](https://discord.gg/KKzBPg6jnu) [Документация](https://internet-2.gitbook.io/kaze-docs/skillcraft-studio/rabota-s-skillcraft-studio)**", inline=False)
 
         await interaction.response.send_message(embed=embed)
 
     @app_commands.command(name="public-skill", description="Публикует навык")
-    async def public_skill(self, interaction: discord.Interaction, name: str, logo: str, phrase_activate: str,
-                           short_describe: str, full_describe: str, tags: str):
+    async def public_skill(self, interaction: discord.Interaction, name: str, logo: str, phrase_activate: str, short_describe: str, full_describe: str, tags: str):
         user = interaction.user.name
-        message = (
-            f'Пользователь {user} использовал команду `/public-skill` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
-        channel_id = 000000000000
+        message = (f'Пользователь {user} использовал команду `/public-skill` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
+        channel_id = #ID канала
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
         user_id = str(interaction.user.id)
@@ -574,7 +536,7 @@ class Slash(Cog_Extension):
             await interaction.response.send_message("Ошибка: Навык с таким названием не найден.")
             return
 
-        channel_id = 1123105518056112270
+        channel_id = #ID канала
         channel = self.bot.get_channel(channel_id)
 
         user_embed = discord.Embed(title=f"Заявка на добавление навыка: {name}", color=discord.Color.blue())
