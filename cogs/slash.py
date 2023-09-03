@@ -1,37 +1,20 @@
 import os
-import schedule
-import tempfile
-from dotenv import load_dotenv
 import openai
-import asyncio
 import discord
+from discord import app_commands
 import random
-import requests
-import time
 from datetime import datetime, timedelta
 from core.classes import Cog_Extension
-from discord import app_commands
-from discord import app_commands
-from flask import Flask
-from threading import Thread
-
-api_key = os.getenv("OPENAI_API_KEY")
 
 context_store = {}
 
-cooldowns = {}
-
-cooldowns_ai = {}
-
-cooldowns_search = {}
-
-class Help(Cog_Extension):
+class Slash(Cog_Extension):
     @app_commands.command(name="register", description="Зарегистрируйтесь в SkillCraft Studio")
     async def register_user(self, interaction: discord.Interaction, api_key: str, prompt_name: str = None):
         user = interaction.user.name
         message = (
             f'Пользователь {user} использовал команду `/register` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
-        channel_id = 1145784601877413958
+        channel_id = 000000000000
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
         user_id = str(interaction.user.id).split("#")[0]
@@ -75,7 +58,7 @@ class Help(Cog_Extension):
         user = interaction.user.name
         message = (
             f'Пользователь {user} использовал команду `/new-prompt` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
-        channel_id = 1145784601877413958
+        channel_id = 000000000000
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
         user_id = str(interaction.user.id)
@@ -109,7 +92,7 @@ class Help(Cog_Extension):
         user = interaction.user.name
         message = (
             f'Пользователь {user} использовал команду `/activate-key` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
-        channel_id = 1145784601877413958
+        channel_id = 000000000000
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
 
@@ -164,7 +147,7 @@ class Help(Cog_Extension):
         user = interaction.user.name
         message = (
             f'Пользователь {user} использовал команду `/edit-prompt` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
-        channel_id = 1145784601877413958
+        channel_id = 000000000000
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
         user_id = str(interaction.user.id)
@@ -208,7 +191,7 @@ class Help(Cog_Extension):
         user = interaction.user.name
         message = (
             f'Пользователь {user} использовал команду `/prompt-list` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
-        channel_id = 1145784601877413958
+        channel_id = 000000000000
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
         user_id = str(interaction.user.id)
@@ -241,7 +224,7 @@ class Help(Cog_Extension):
         user = interaction.user.name
         message = (
             f'Пользователь {user} использовал команду `/delete-prompt` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
-        channel_id = 1145784601877413958
+        channel_id = 000000000000
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
         user_id = str(interaction.user.id)
@@ -267,7 +250,7 @@ class Help(Cog_Extension):
         user = interaction.user.name
         message = (
             f'Пользователь {user} использовал команду `/change-key` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
-        channel_id = 1145784601877413958
+        channel_id = 000000000000
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
         user_id = str(interaction.user.id)
@@ -300,7 +283,7 @@ class Help(Cog_Extension):
         user = interaction.user.name
         message = (
             f'Пользователь {user} использовал команду `/show-prompt` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
-        channel_id = 1145784601877413958
+        channel_id = 000000000000
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
         user_id = str(interaction.user.id)
@@ -334,7 +317,7 @@ class Help(Cog_Extension):
         user = interaction.user.name
         message = (
             f'Пользователь {user} использовал команду `/test-prompt` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
-        channel_id = 1145784601877413958
+        channel_id = 000000000000
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
         user_id = str(interaction.user.id)
@@ -370,7 +353,7 @@ class Help(Cog_Extension):
         user = interaction.user.name
         message = (
             f'Пользователь {user} использовал команду `/test-chat` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
-        channel_id = 1145784601877413958
+        channel_id = 000000000000
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
         user_id = str(interaction.user.id)
@@ -427,10 +410,10 @@ class Help(Cog_Extension):
             )
 
             reply = response.choices[0].message.content.strip()
-
+            respone = f"**Aika AI:** {reply}"
             context.append({"role": "assistant", "content": reply})
 
-            await interaction.followup.send(reply)
+            await interaction.followup.send(respone)
         except Exception as e:
             await interaction.followup.send(
                 f"При обработке запроса в чат произошла ошибка. Скорее всего из за отсутствия токенов. Купить новый API ключ помжно по команде `/buy-key`.")
@@ -440,7 +423,7 @@ class Help(Cog_Extension):
         user = interaction.user.name
         message = (
             f'Пользователь {user} использовал команду `/test-stop` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
-        channel_id = 1145784601877413958
+        channel_id = 000000000000
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
         user_id = str(interaction.user.id)
@@ -475,7 +458,7 @@ class Help(Cog_Extension):
         user = interaction.user.name
         message = (
             f'Пользователь {user} использовал команду `/profile` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
-        channel_id = 1145784601877413958
+        channel_id = 000000000000
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
         user_id = str(interaction.user.id)
@@ -529,7 +512,7 @@ class Help(Cog_Extension):
         user = interaction.user.name
         message = (
             f'Пользователь {user} использовал команду `/buy-key` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
-        channel_id = 1145784601877413958
+        channel_id = 000000000000
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
         embed = discord.Embed(title="Купить API ключ OpenAI",
@@ -544,7 +527,7 @@ class Help(Cog_Extension):
         user = interaction.user.name
         message = (
             f'Пользователь {user} использовал команду `/info` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
-        channel_id = 1145784601877413958
+        channel_id = 000000000000
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
         version = "1.0.00 (release)"
@@ -576,7 +559,7 @@ class Help(Cog_Extension):
         user = interaction.user.name
         message = (
             f'Пользователь {user} использовал команду `/public-skill` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
-        channel_id = 1145784601877413958
+        channel_id = 000000000000
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
         user_id = str(interaction.user.id)
@@ -591,7 +574,7 @@ class Help(Cog_Extension):
             await interaction.response.send_message("Ошибка: Навык с таким названием не найден.")
             return
 
-        channel_id = 1123946927495585792
+        channel_id = 1123105518056112270
         channel = self.bot.get_channel(channel_id)
 
         user_embed = discord.Embed(title=f"Заявка на добавление навыка: {name}", color=discord.Color.blue())
@@ -614,4 +597,4 @@ class Help(Cog_Extension):
         await interaction.response.send_message(f"Навык `{name}` был отправлен на модерацию.")
 
 async def setup(bot):
-    await bot.add_cog(Help(bot))
+    await bot.add_cog(Slash(bot))
