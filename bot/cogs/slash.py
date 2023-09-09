@@ -13,8 +13,7 @@ class Slash(Cog_Extension):
     @app_commands.command(name="register", description="Зарегистрируйтесь в SkillCraft Studio")
     async def register_user(self, interaction: discord.Interaction, api_key: str, prompt_name: str = None):
         user = interaction.user.name
-        message = (
-            f'Пользователь {user} использовал команду `/register` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
+        message = (f'Пользователь {user} использовал команду `/register` в канале `{interaction.channel.name if isinstance(interaction.channel, discord.TextChannel) else "Direct Message"}`')
         channel_id =
         channel = self.bot.get_channel(channel_id)
         await channel.send(message)
