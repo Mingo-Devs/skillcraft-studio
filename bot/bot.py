@@ -3,9 +3,6 @@ import discord
 import os
 import requests
 from discord.ext import commands
-from dotenv import load_dotenv
-
-load_dotenv()
 
 intents = discord.Intents.default()
 
@@ -152,7 +149,7 @@ async def addcode(ctx, *, text):
 async def addkeys(ctx, key):
     with open('keys.txt', 'a') as file:
         file.write(f"{key}\n")
-    await ctx.send(f"OpenAI API ключ был добавлен в списко")
+    await ctx.send(f"OpenAI API ключ был добавлен в список")
 
 
 if __name__ == '__main__':
